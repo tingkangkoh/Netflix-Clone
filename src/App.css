@@ -1,0 +1,207 @@
+html {
+  font-size: 100px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+body {
+  background: black;
+  overflow-x: hidden;
+}
+
+.header {
+  display: flex;
+  padding-left: 0.3rem;
+  align-items: center;
+  padding-right: 0.3rem;
+  position: fixed;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+nav {
+  font-size: 0.2rem;
+  flex-grow: 1;
+  align-items: center;
+  height: 80px;
+  padding-left: 0.3rem;
+  color: white;
+  font-weight: bold;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.logo {
+  width: 1rem;
+}
+
+.search-link {
+  margin-left: auto;
+}
+
+.search-icon {
+  width: 0.22rem;
+}
+
+.notification-icon {
+  width: 0.22rem;
+}
+
+.hero {
+  height: 70vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.swiper {
+  font-size: 16px;
+  width: 96%;
+  overflow: visible;
+  margin-bottom: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+.swiper-title-container {
+  width: 96%;
+  margin: 0 auto;
+}
+.swiper-title {
+  color: white;
+  font-size: 0.44rem;
+  font-weight: bold;
+}
+
+.swiper-slide {
+  cursor: pointer;
+}
+
+.swiper-slide {
+  position: relative;
+  transition: transform 0.25s ease;
+}
+.swiper-slide:hover {
+  transform: scale(1.2);
+  z-index: 2;
+}
+
+.hero-text {
+  width: 40%;
+  position: absolute;
+  bottom: 0.3rem;
+  padding-left: 0.3rem;
+}
+.hero-title {
+  color: white;
+  font-size: 0.7rem;
+}
+
+.hero-overview {
+  color: white;
+  font-size: 0.32rem;
+}
+
+.swiper-slide .card-details {
+  background-color: #262626;
+  color: white;
+  opacity: 0;
+  visibility: hidden;
+  padding-top: 0.1rem;
+  padding-left: 0.1rem;
+  position: absolute;
+  width: 100%;
+  z-index: 3;
+}
+
+.swiper-slide:hover .card-details {
+  opacity: 1;
+  visibility: visible;
+  z-index: 3;
+}
+
+.swiper-slide:hover {
+  z-index: 3;
+}
+
+main {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.card-button-icon {
+  width: 0.24rem;
+}
+
+.card-button {
+  background: white;
+  border-radius: 50%;
+  padding: 0.1rem;
+  padding-right: 0.1rem;
+  margin-right: 0.05rem;
+  margin-bottom: 0.1rem;
+}
+
+.genre-span {
+  margin-right: 0.1rem;
+}
+
+.card-button-container {
+  display: flex;
+}
