@@ -1,21 +1,37 @@
 import NavLink from "./NavLink";
 import { useState } from "react";
-function Nav() {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { useSearchParams, useNavigate } from "react-router-dom";
+function Nav({ setSearch }) {
+  const navigate = useNavigate();
   function handleSearchChange(event) {
-    setSearch(event.target.value);
+    setSearchInput(event.target.value);
+    if (event.target.value) {
+      navigate(`/search?query=${event.target.value}`);
+      setSearch(event.target.value);
+    } else {
+      navigate("/");
+    }
   }
-  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [activeLink, setActiveLink] = useState("Home");
   return (
     <nav>
       <ul>
-        <NavLink link="Home" />
-        <NavLink link="TV Shows" />
-        <NavLink link="Movies" />
+        <NavLink link="Home" setSearchInput={setSearchInput} />
+        <NavLink link="Movies" setSearchInput={setSearchInput} />
+        <NavLink link="TV Shows" setSearchInput={setSearchInput} />
+        <input
+          value={searchInput}
+          onChange={handleSearchChange}
+          className="nav-search"
+        />
         <NavLink link="Search" />
-        <input value={search} onChange={handleSearchChange} />
-        {search}
+
         <NavLink link="Notification" />
         <NavLink link="User" />
+        <FontAwesomeIcon icon={faBars} className="nav-icon" />
       </ul>
     </nav>
   );
