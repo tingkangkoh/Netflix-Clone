@@ -36,6 +36,7 @@ function searchItem({ media, handleSlideClick, setHeroSelect, setModalOn }) {
           <span className="genre-span">{genreName}</span>
         ))}
       </div>
+      <div className="card-hover-cover"></div>
     </div>
   );
 }

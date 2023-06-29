@@ -59,6 +59,8 @@ function SwiperContainer({ title, media, setHeroSelect, setModalOn }) {
             <span className="genre-span">{genreName}</span>
           ))}
         </div>
+        <div className="card-hover-cover"></div>
+
       </SwiperSlide>
     );
   });

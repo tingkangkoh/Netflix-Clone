@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useReducer } from "react";
 import Hero from "./Hero.js";
 import Main from "./Main.js";
 import movieService from "./services/movies";
@@ -37,6 +37,8 @@ function App() {
   const [searchResult, setSearchResult] = useState([]);
 
   function addGenreNames(movies, type, genres, genresTv) {
+    console.log("movies",movies)
+    console.log("movies.results",movies.results)
     let moviesResults = movies.results.map((movie) => {
       let movieNew = { ...movie };
       if (movieNew.genre_ids) {
@@ -98,6 +100,24 @@ function App() {
     return media.filter((item) => item.backdrop_path !== null);
   }
 
+
+  async function getSetData(movieServiceGetter,genres,genresTv,type,stateSetter,genreNumber=""){
+    let data;
+    if(genreNumber){
+      data=await movieServiceGetter(genreNumber)
+    }
+    else{
+      data=await movieServiceGetter();
+    }
+    let updatedData = addGenreNames(
+      data,
+      type,
+      genres.genres,
+      genresTv.genres
+    );
+    updatedData=filterBackdropPath(updatedData);
+    stateSetter(updatedData);
+  }
   async function setup() {
     let genres = await movieService.getGenresMovies();
     let genresTv = await movieService.getGenresTv();
@@ -112,128 +132,23 @@ function App() {
     setTrending(updatedMovies);
     setHeroSelect(updatedMovies[0]);
 
-    let moviesTop = await movieService.getTopMovies();
-    let updateMovies = addGenreNames(
-      moviesTop,
-      "movies",
-      genres.genres,
-      genresTv.genres
-    );
-    updateMovies = filterBackdropPath(updateMovies);
-    setTopMovies(updateMovies);
 
-    let tvTop = await movieService.getTopTv();
-    let updatedTv = addGenreNames(tvTop, "tv", genres.genres, genresTv.genres);
-    updatedTv = filterBackdropPath(updatedTv);
-    setTopTv(updatedTv);
 
-    let actionMovies = await movieService.getMoviesGenre(28);
-    let updatedActionMovies = addGenreNames(
-      actionMovies,
-      "movies",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedActionMovies = filterBackdropPath(updatedActionMovies);
-    setActionMovies(updatedActionMovies);
-
-    let advenMovies = await movieService.getMoviesGenre(12);
-    let updatedAdvenMovies = addGenreNames(
-      advenMovies,
-      "movies",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedAdvenMovies = filterBackdropPath(updatedAdvenMovies);
-    setAdventureMovies(updatedAdvenMovies);
-
-    let comedyMovies = await movieService.getMoviesGenre(35);
-    let updatedComedyMovies = addGenreNames(
-      comedyMovies,
-      "movies",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedComedyMovies = filterBackdropPath(updatedComedyMovies);
-    setComedyMovies(updatedComedyMovies);
-
-    let horrorMovies = await movieService.getMoviesGenre(27);
-    let updatedHorrorMovies = addGenreNames(
-      horrorMovies,
-      "movies",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedComedyMovies = filterBackdropPath(updatedComedyMovies);
-    setHorrorMovies(updatedHorrorMovies);
-
-    let thrillerMovies = await movieService.getMoviesGenre(53);
-    let updatedThrillerMovies = addGenreNames(
-      thrillerMovies,
-      "movies",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedThrillerMovies = filterBackdropPath(updatedThrillerMovies);
-    setThrillerMovies(updatedThrillerMovies);
-
-    let actionTv = await movieService.getTvGenre(10759);
-    let updatedActionTv = addGenreNames(
-      actionTv,
-      "tv",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedActionTv = filterBackdropPath(updatedActionTv);
-    setActionTv(updatedActionTv);
-
-    //animation
-    let animationTv = await movieService.getTvGenre(16);
-    let updatedAnimationTv = addGenreNames(
-      animationTv,
-      "tv",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedAnimationTv = filterBackdropPath(updatedAnimationTv);
-    setAnimationTv(updatedAnimationTv);
-    //comedy
-
-    let comedyTv = await movieService.getTvGenre(35);
-    let updatedComedyTv = addGenreNames(
-      comedyTv,
-      "tv",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedComedyTv = filterBackdropPath(updatedComedyTv);
-    setComedyTv(updatedComedyTv);
-    //sci-fi
-    let scifiTv = await movieService.getTvGenre(10765);
-    let updatedScifiTv = addGenreNames(
-      scifiTv,
-      "tv",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedScifiTv = filterBackdropPath(updatedScifiTv);
-    setSciTv(updatedScifiTv);
-    //drama
-
-    let dramaTv = await movieService.getTvGenre(18);
-    let updatedDramaTv = addGenreNames(
-      dramaTv,
-      "tv",
-      genres.genres,
-      genresTv.genres
-    );
-    updatedDramaTv = filterBackdropPath(updatedDramaTv);
-    setDramaTv(updatedDramaTv);
+    getSetData(movieService.getTopMovies,genres,genresTv,"movies",setTopMovies);
+    getSetData(movieService.getTopTv,genres,genresTv,"tv",setTopTv);
+    getSetData(movieService.getMoviesGenre,genres,genresTv,"movies",setActionMovies,28);
+    getSetData(movieService.getMoviesGenre,genres,genresTv,"movies",setAdventureMovies,12);
+    getSetData(movieService.getMoviesGenre,genres,genresTv,"movies",setComedyMovies,35);
+    getSetData(movieService.getMoviesGenre,genres,genresTv,"movies",setHorrorMovies,27);
+    getSetData(movieService.getMoviesGenre,genres,genresTv,"movies",setThrillerMovies,53);
+    getSetData(movieService.getTvGenre,genres,genresTv,"tv",setActionTv,10759);
+    getSetData(movieService.getTvGenre,genres,genresTv,"tv",setAnimationTv,16);
+    getSetData(movieService.getTvGenre,genres,genresTv,"tv",setComedyTv,35);
+    getSetData(movieService.getTvGenre,genres,genresTv,"tv",setDramaTv,18);
+    getSetData(movieService.getTvGenre,genres,genresTv,"tv",setSciTv,10765);
+    
   }
 
-  let trending_titles = trending.map((media) =>
-    media.name ? media.name : media.title
-  );
 
   function modalOutput() {
     if (modalOn) {
